@@ -28,6 +28,6 @@ for kernel_size in kernel_sizes:
     noise_conv  = convolve2d(noise, kernel, 'same')
     plt.figure()
     plt.imshow(i + noise_conv)
-    plt.title('image plus filtered noise, sigma: %d and kernelsize: %d' % sigma, kernel_size)
+    plt.title('image plus filtered noise, sigma: %d and kernelsize: %d' % (sigma, kernel_size))
 plt.show()
 

@@ -2,12 +2,20 @@
 import pylab as plt
 from image_tools import *
 
-image_path  = "/home/mohbf/images/"
-im_type     = "tiff"
+image_path  = "/home/raf/mohbf/ex1/images/"
+img_type     = "tiff"
 
-chosen_one  = get_random_image(image_path, im_type)
-rand_i      = load_image(chosen_one)
-plt.imshow(rand_i)
+chosen_one  = get_random_image(image_path, img_type)
+rand_img      = load_image(chosen_one)
+plt.imshow(rand_img)
 plt.gray()
 plt.title(chosen_one)
+
+patch = get_random_patch(rand_img)
+
+plt.figure()
+plt.imshow(patch)
 plt.show()
+
+
+

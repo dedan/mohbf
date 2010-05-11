@@ -16,3 +16,18 @@ def add_noise(im, sigma):
 def get_random_image(path, im_type):
     return random.choice(glob.glob(path +"*." +im_type))
 
+def get_random_patch(image):
+    """Returns a random n-by-n patch of an image."""
+    imgSize = np.sort(np.shape(image))
+
+    patchSize = np.random.randint(1, imgSize[0])
+    xInd = np.random.randint(1, imgSize[0]-patchSize)
+    yInd = np.random.randint(1, imgSize[0]-patchSize)
+
+    patch = np.zeros((patchSize,patchSize))
+
+    for i in np.arange(xInd,xInd+patchSize,1):
+        for j in np.arange(yInd,yInd+patchSize,1):
+            patch[i-xInd,j-yInd] = image[i,j]
+
+    return patch

@@ -12,9 +12,10 @@ plt.gray()
 plt.title(chosen_one)
 
 patch = get_random_patch(rand_img)
+normedPatch = norm_patch(patch)
 
 plt.figure()
-plt.imshow(patch)
+plt.imshow(normedPatch)
 plt.show()
 
 

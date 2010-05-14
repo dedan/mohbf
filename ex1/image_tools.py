@@ -1,4 +1,3 @@
-
 import Image
 import numpy as np
 import glob

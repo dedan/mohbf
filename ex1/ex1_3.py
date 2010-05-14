@@ -1,9 +1,11 @@
-
 import pylab as plt
 from image_tools import *
 
 image_path  = "./images/"
 img_type    = "tiff"
+
+"""Loads a rando image from database, extracts and nomalizes a random patch of it
+and plots both."""
 
 chosen_one  = get_random_image(image_path, img_type)
 rand_img    = load_image(chosen_one)

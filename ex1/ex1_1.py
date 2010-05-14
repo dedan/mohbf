@@ -1,7 +1,8 @@
-
 from image_tools import *
 import pylab as plt
 import numpy as np
+
+"""Imports a picture from database, converts it to an array and plots it."""
 
 image_path = '/home/mohbf/images/imk00571.tiff'
 

@@ -1,9 +1,9 @@
-
 import numpy as np
 import pylab as plt
 from scipy.signal import convolve2d
 from image_tools import *
 
+"""Imports an image and adds gaussian noise using different sigmas to the image."""
 
 sigmas = [100, 1000, 5000, 10000, 30000]
 
@@ -19,6 +19,8 @@ for sigma in sigmas:
     plt.imshow(noisi)
     plt.title('image plus random noise, sigma: %d' % sigma)
 
+"""Filtered gaussian noise: Generates white noise and replaces each pixel with the
+average noise value in a square centered on that pixel. """
 
 kernel_sizes    = [3, 5, 9, 15, 29]
 sigma           = 5000

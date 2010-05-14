@@ -21,20 +21,11 @@ def get_random_image(path, im_type):
 
 def get_random_patch(image):
     """Returns a random n-by-n patch of an image."""
-    if np.shape(image)[0] < np.shape(image)[1]:
-        maxSize = np.shape(image)[0]
-    else: maxSize = np.shape(image)[1]
-
-    patchSize = np.random.randint(1, maxSize)
-    xInd = np.random.randint(1, np.shape(image)[0]-patchSize)
-    yInd = np.random.randint(1, np.shape(image)[1]-patchSize)
-    patch = np.zeros((patchSize,patchSize))
-
-    for i in np.arange(xInd,xInd+patchSize,1):
-        for j in np.arange(yInd,yInd+patchSize,1):
-            patch[i-xInd,j-yInd] = image[i,j]
-
-    return patch
+    maxSize     = np.min(np.shape(image)[0])
+    patchSize   = np.random.randint(1, maxSize)
+    xInd        = np.random.randint(1, np.shape(image)[0]-patchSize)
+    yInd        = np.random.randint(1, np.shape(image)[1]-patchSize)
+    return image[xInd:xInd+patchSize, yInd:yInd+patchSize]
 
 def norm_patch(patch):
     """Normalizes a patch to zero mean and unitary variance."""

@@ -19,10 +19,13 @@ def get_random_image(path, im_type):
     """Returns a random image from database."""
     return random.choice(glob.glob(path +"*." +im_type))
 
-def get_random_patch(image):
+def get_random_patch(image, size=None):
     """Returns a random n-by-n patch of an image."""
-    maxSize     = np.min(np.shape(image))
-    patchSize   = np.random.randint(1, maxSize)
+    if size == None:
+        maxSize     = np.min(np.shape(image))
+        patchSize   = np.random.randint(1, maxSize)
+    else: patchSize   = size
+
     xInd        = np.random.randint(1, np.shape(image)[0]-patchSize)
     yInd        = np.random.randint(1, np.shape(image)[1]-patchSize)
     return image[xInd:xInd+patchSize, yInd:yInd+patchSize]

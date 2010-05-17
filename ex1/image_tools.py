@@ -34,7 +34,7 @@ def norm_patch(patch):
     return (patch-np.mean(patch))/np.std(patch)
 
 def norm_patch_set(patch_set):
-    """normalize a set of patches"""
+    """Normalize a set of patches."""
     arr        = np.array(patch_set)
     var        = np.std(arr, axis=0)
     mean_patch = np.mean(arr, axis=0)

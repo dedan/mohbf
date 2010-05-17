@@ -34,3 +34,18 @@ def norm_patch(patch):
     meanPatch = np.mean(patch)
     varPatch  = np.std(patch)
     return (patch-meanPatch)/varPatch
+
+def norm_patch_set(patch_set):
+    flat = []
+    mean_patch = np.zeros(np.shape(patch_set[0]))
+    print np.shape(mean_patch)
+    for patch in patch_set:
+        mean_patch = mean_patch + patch
+        flat.append(patch)
+    mean_patch  = mean_patch / len(patch_set)
+    var         = np.std(flat)
+    return [(patch-mean_patch)/var for patch in patch_set]        
+
+
+
+

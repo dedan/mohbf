@@ -23,7 +23,7 @@ for i in range (numberPatches):
     currentImg = get_random_image(image_path, img_type)
     currentImg = load_image(currentImg)
     
-    patch = get_random_patch(currentImg, 16)
+    patch = get_random_patch(currentImg, patchSize)
     
     noisyPatch = add_noise(patch, sigma)
 
@@ -35,6 +35,7 @@ for i in range (numberPatches):
     noisePatches.append(norm_patch(noisyPatch))
     filteredNoisePatches.append(norm_patch(filteredNoisePatch))
 
+#pl.rcParams['image.interpolation'] = 'nearest'
 pl.figure()
 pl.subplot(1,3,1)
 pl.imshow(normedPatches[1])

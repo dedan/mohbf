@@ -4,40 +4,33 @@ import numpy as np
 
 image_path  = "./images/"
 img_type    = "tiff"
+patch_size  = 16
+n_patches   = 2
 plt.rcParams['image.interpolation'] = 'nearest'
 
 """Loads a rando image from database, extracts and nomalizes a random patch of it
 and plots both."""
 
+# load random image
 chosen_one  = get_random_image(image_path, img_type)
 rand_img    = load_image(chosen_one)
 plt.imshow(rand_img)
 plt.gray()
 plt.title(chosen_one)
 
-patch = get_random_patch(rand_img)
+# get random patch and norm it
+patch       = get_random_patch(rand_img)
 normedPatch = norm_patch(patch)
-
+print np.mean(normedPatch)
+print np.std(normedPatch)
 plt.figure()
 plt.imshow(normedPatch)
 
-n_patches = 10
-patch_set = [get_random_patch(rand_img,16) for i in range(n_patches)]
+# norm a set of patches
+patch_set = [get_random_patch(rand_img, patch_size) for i in range(n_patches)]
 normed_patch_set = norm_patch_set(patch_set)
 
-flat = []
-mean_patch = np.zeros(np.shape(patch_set[0]))
-for patch in patch_set:
-    mean_patch = mean_patch + patch
-    flat.append(patch)
-        
-mean_patch  = mean_patch / len(patch_set)
-print np.shape(flat)
-var         = np.std(flat)
-
-print np.mean(mean_patch)
-print np.std(mean_patch)
-plt.figure()
-plt.imshow(normed_patch_set[0])
+print np.mean(np.array(normed_patch_set), axis=0)
+print np.std(np.array(normed_patch_set), axis=0)
 plt.show()
 

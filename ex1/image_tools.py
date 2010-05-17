@@ -31,19 +31,13 @@ def get_random_patch(image, size=None):
 
 def norm_patch(patch):
     """Normalizes a patch to zero mean and unitary variance."""
-    meanPatch = np.mean(patch)
-    varPatch  = np.std(patch)
-    return (patch-meanPatch)/varPatch
+    return (patch-np.mean(patch))/np.std(patch)
 
 def norm_patch_set(patch_set):
-    flat = []
-    mean_patch = np.zeros(np.shape(patch_set[0]))
-    print np.shape(mean_patch)
-    for patch in patch_set:
-        mean_patch = mean_patch + patch
-        flat.append(patch)
-    mean_patch  = mean_patch / len(patch_set)
-    var         = np.std(flat)
+    """normalize a set of patches"""
+    arr        = np.array(patch_set)
+    var        = np.std(arr, axis=0)
+    mean_patch = np.mean(arr, axis=0)
     return [(patch-mean_patch)/var for patch in patch_set]        
 
 

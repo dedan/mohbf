@@ -7,10 +7,11 @@ from image_tools import *
 white noise patches in vector representation. Uses 5000 40 x 40 patches and
 analyzes the first 25 basis vectors."""
 
-image_path  = "./images/"
+image_path  = "/home/mohbf/images/"
 img_type    = "tiff"
+plt.rcParams['image.interpolation'] = 'nearest'
 
-numberPatches = 5
+numberPatches = 5000
 patchSize     = 40
 patches       = []
 
@@ -19,13 +20,21 @@ for i in range(numberPatches):
     currentImg = load_image(currentImg)
     
     patch = get_random_patch(currentImg, patchSize)
-    patch = np.array(patch)
-    patch = patch.reshape(patchSize**2,1)
+    patch = patch.flatten(1)
     
-    patches = np.concatenate((patches, norm_patch(patch)))
-    
-#patches = patches.reshape(1,)
-print patches
+    patches.append(patch)
 
-#y = mdp.pca(patches)
+patches = np.array(patches, float)
+print np.shape(patches)
+
+pici = mdp.nodes.PCANode()
+pici.train(patches)
+pc   = pici.get_projmatrix()
+
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.imshow(np.reshape(pc[:,i], (patchSize,patchSize)),vmin=np.min(pc),vmax=np.max(pc))
+    plt.gray()
+plt.show()
+    
 

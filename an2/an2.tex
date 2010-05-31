@@ -1,0 +1,208 @@
+%
+%  untitled
+%
+%  Created by Stephan Gabler on 2010-05-31.
+%  Copyright (c) 2010 __MyCompanyName__. All rights reserved.
+%
+\documentclass[]{article}
+
+% Use utf-8 encoding for foreign characters
+\usepackage[utf8]{inputenc}
+
+% Setup for fullpage use
+\usepackage{fullpage}
+
+% Uncomment some of the following if you use the features
+%
+% Running Headers and footers
+%\usepackage{fancyhdr}
+
+% Multipart figures
+%\usepackage{subfigure}
+
+% More symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+
+% Surround parts of graphics with box
+\usepackage{boxedminipage}
+
+% Package for including code in the document
+\usepackage{listings}
+
+% If you want to generate a toc for each chapter (use with book)
+\usepackage{minitoc}
+
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\title{MoHBF Analytical Sheet 2}
+\author{Stephan Gabler}
+
+\date{\today}
+
+\begin{document}
+
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg, .tif}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\maketitle
+
+\section{Exercise 1 (Whitening Filters)} % (fold)
+\label{sg:sec:exercise_1_whitening_filters_}
+
+We have to show that:
+\begin{equation}
+	W^{-1} W^{-1} = C
+\end{equation}
+and $C$ is defined by:
+\begin{equation}
+	C = U \Sigma U^{T}
+\end{equation}
+To come to this result we first have to define the Whitening Filter. It can
+be found by the steps which are applied during Whitening.
+
+First the data (x) is rotated into PCA-Space
+\begin{equation}
+	y = U^{T} x
+\end{equation}
+then it is scaled to Unit variance
+\begin{equation}
+	s = \Sigma^{-\frac{1}{2}} y
+\end{equation}
+and then rotated back to the original space:
+\begin{equation}
+	z = U s = \underbrace{U \Sigma^{-\frac{1}{2}} U^{T}}_{W} x
+\end{equation}
+and therefore the inverse of W is:
+\begin{equation}
+	W^{-1} = U^{T^{-1}} \Sigma^{\frac{1}{2}} U^{-1} 
+\end{equation}
+Finally we show $W^{-1} W^{-1} = C$ by using the property $U^{T} = U^{-1}$ of an orthonormal matrix:
+\[
+\begin{aligned}
+	W^{-1} W^{-1} 
+		&= U^{T^{-1}} \Sigma^{\frac{1}{2}} \underbrace{U^{-1} U^{T^{-1}}}_{I^{-1} = I} \Sigma^{\frac{1}{2}} U^{-1}  \\
+		&= U^{T^{-1}} \Sigma^{\frac{1}{2}} I\, \Sigma^{\frac{1}{2}} U^{-1} \\
+		&= U^{T^{-1}} \Sigma U^{-1} \\
+		&= U \Sigma U^{T} \\
+		&= C
+\end{aligned}	
+\]
+
+
+% section exercise_1_whitening_filters_ (end)
+
+
+
+
+\section{Exercise 2 (Independence and correlation)} % (fold)
+\label{sg:sec:ex2}
+
+\subsection{independent $\Rightarrow$ uncorrelated} % (fold)
+\label{sg:sub:2_1}
+$X, Y$ are independent and real variables and therefore it holds that:
+\begin{equation}
+	P(X,Y) = P(X) P(Y)
+\end{equation}
+f, g are functions $\mathbb{R} \rightarrow \mathbb{R}$. In order to show
+that $cov((f(X)), g(Y)) = 0$ it has to be shown that:
+\begin{equation}
+	\begin{aligned}
+		\mathbb{E}(f(X) g(Y)) 
+		&= \iint{f(X) g(Y) \underbrace{p(X,Y)}_\mathrm{independent} \, dX dY}  \\
+		&= \iint{f(X) g(Y) p(X) p(Y) \, dX dY} \\
+		&= \iint{f(X) p(X) \, dX g(Y) p(Y) \, dY}	\\
+		&= \int{f(X) p(X) \, dX} \int{g(Y) p(Y) \, dY}	\\
+		&= \mathbb{E}(f(X)) \mathbb{E}(g(Y)) \\
+	\end{aligned}
+\end{equation}
+
+% subsection 2_1 (end)
+
+\subsection{depended but uncorrelated} % (fold)
+\label{sg:sub:2_2}
+
+\begin{equation}
+	\begin{aligned}
+		cov(X,X^2) &= \mathbb{E}(X^3) - \underbrace{\mathbb{E}(x)}_0 \mathbb{E}(x^2) \\
+		&= \mathbb{E}(X^3)
+	\end{aligned}
+\end{equation}
+The argument for showing that $\mathbb{E}(X^3) = 0$ is to say that $x^3$ is an
+odd function and that $p(X)$ is an even function so that the integral over this product 
+sums up to 0. And therefore:
+\begin{equation}
+	\int{x^3 p(x) \, dx} = 0
+\end{equation}
+
+
+
+% subsection 2_2 (end)
+% section ex2 (end)
+
+\section{Exercise 3 Gain Control} % (fold)
+\label{sg:sec:exercise_3_gain_control}
+
+$X_1, X_2, V \sim \mathcal{N}(0,1)$ and
+\begin{equation}
+	Z_1 := X_1 V, Z_2 := X_2 V.
+\end{equation}
+
+\subsection{} % (fold)
+\label{sg:ssub:blub}
+\begin{equation*}
+	\begin{aligned}
+		cov(Z_1, Z_2) 
+		&= \mathbb{E}(X_1 V X_2 V) - \mathbb{E}(X_1 V) \mathbb{E}(X_2 V) \\
+		&= \mathbb{E}(\underbrace{X_1 X_2}_{independent} V^2) - \mathbb{E}(X_1) \mathbb{E}(V) \mathbb{E}(X_2) \mathbb{E}(V) \\
+		&= \underbrace{\mathbb{E}(X_1 X_2)}_0 \mathbb{E}(V^2) - \underbrace{\mathbb{E}(X_1) \mathbb{E}(V) \mathbb{E}(X_2) \mathbb{E}(V)}_0 \\
+		&= 0
+	\end{aligned}
+\end{equation*}
+% subsection  (end)
+
+\subsection{} % (fold)
+\label{sg:ssub:bla}
+
+Using that the expectancy of the square of a normally distributed random variable is 1.
+
+\begin{equation*}
+	\begin{aligned}
+		cov(Z^2_1, Z^2_2) 
+		&= \mathbb{E}(X^2_1 V^2 X^2_1 V^2) - \mathbb{E}(X^2_1 V^2) \mathbb{E}(X^2_1 V^2) \\
+		&= \mathbb{E}(\underbrace{X^2_1 X^2_1}_{independent} V^4) - 
+			\mathbb{E}(\underbrace{X^2_1 V^2}_{independent}) \mathbb{E}(\underbrace{X^2_1 V^2}_{independent}) \\
+		&= \underbrace{\mathbb{E}(X^2_1)\mathbb{E}(X^2_1)}_{1} \mathbb{E}(V^4) - 
+			\underbrace{\mathbb{E}(X^2_1) \mathbb{E}(X^2_1)}_{1} \mathbb{E}(V^2) \mathbb{E}(V^2) \\
+		&= \mathbb{E}({V^{2}}^2) - \mathbb{E}(V^2)^2 \\
+		&= var(V^2) \\
+		&\neq 0 \\
+	\end{aligned}
+\end{equation*}
+% subsection  (end)
+
+
+
+% section exercise_3_gain_control (end)
+
+
+
+\end{document}

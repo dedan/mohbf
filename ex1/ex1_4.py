@@ -7,7 +7,7 @@ from scipy.signal import convolve2d
 500 16 x 16 pixel white noise patches, 500 16 x 16 pixel patches of filtered noise 
 and normalizes each set."""
 
-numberPatches = 3
+numberPatches = 500
 patchSize = 16
 
 image_path  = "./images/"

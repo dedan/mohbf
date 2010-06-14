@@ -197,5 +197,19 @@ This clearly gives the same result as before.
 % section exercise_3_gain_control (end)
 
 
+\section{Exercise 4 (Binomial Data and Adaptive Procedures)} % (fold)
+\label{sg:sec:exercise_4}
+
+First we need to define what we mean here by convergence since we know that at the least after every 3 presentations our stimulus intensity will be changed by a discrete amount according
+to how the 3 down 1 up procedure is defined, so the sequence of stimulus values themselves don't converge in a mathematical sense.
+
+We could do this in terms of average of sum of the preceding terms. So we might say (for example) that the sequence of stimulus presentations converges to $a$ if for any  $\epsilon > 0$  there exists a time point $T$ such that if $t > T $ $|\frac{1}{M}\sum_{i=1}^{t} s(i) - a |< \epsilon$.
+
+But this won't work since it's conceivable that these terms s(i) could alternate between tow distinct values, and the \emph{convergence} point will lie somewhere in between.
+
+
+% section exercise_4 (end)
+
+
 
 \end{document}

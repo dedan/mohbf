@@ -1,0 +1,201 @@
+%
+%  untitled
+%
+%  Created by Stephan Gabler on 2010-05-31.
+%  Copyright (c) 2010 __MyCompanyName__. All rights reserved.
+%
+\documentclass[]{article}
+
+% Use utf-8 encoding for foreign characters
+\usepackage[utf8]{inputenc}
+
+% Setup for fullpage use
+\usepackage{fullpage}
+
+% Uncomment some of the following if you use the features
+%
+% Running Headers and footers
+%\usepackage{fancyhdr}
+
+% Multipart figures
+%\usepackage{subfigure}
+
+% More symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+
+% Surround parts of graphics with box
+\usepackage{boxedminipage}
+
+% Package for including code in the document
+\usepackage{listings}
+
+% If you want to generate a toc for each chapter (use with book)
+\usepackage{minitoc}
+
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+
+
+% additional mathcommands
+\newcommand{\summing}{\sum_{i=1}^N}
+\newcommand{\summingtwo}{\sum_{j=1}^N}
+
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\title{MoHBF Analytical Sheet 3}
+\author{Stephan Gabler}
+
+\date{\today}
+
+\begin{document}
+
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg, .tif}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\maketitle
+
+I cooperated with Duncan Blythe and Rafael Schultze-Kraft.
+
+\section{Exercise 1 (Linear Regression and LMSE)} % (fold)
+\label{sg:sec:exercise_1_whitening_filters_}
+
+The error function is given by $E = \sum_{i=1}^{N}(y_i-\alpha{x} - \beta)^2$. Differentiate $E$ with respect to $\alpha$ and $\beta$ to get:-
+\begin{equation}
+	\frac{{\partial}E}{{\partial}\beta} = -2\sum_{i=1}^N({y_i - \alpha{x_i} - \beta) = 0} 
+\end{equation} 
+Which is zero at a minimum. \\
+so for a minimum w.r.t.beta:
+ 
+ \begin{equation}
+ \beta = \frac{1}{N}(\summing y_i-\alpha\summing{x_i})
+ \end{equation} 
+ 
+ But also if we substitute this value for $\beta$ into the error function and differentiate w.r.t. $\alpha$, then we get:-
+ 
+ \begin{eqnarray*}
+ \frac{{\partial}E}{{\partial}\alpha} &=& \frac{\partial}{\partial \alpha}\summing(y_i-\alpha x_i-\frac{1}{N}{\summingtwo}y_j + \frac{\alpha}{N}\summingtwo x_j)^2 \\
+ &=& \frac{\partial}{\partial \alpha}\summing(y_i-\alpha x_i-\frac{1}{N}{\summingtwo}y_j + \frac{\alpha}{N}\summingtwo x_j) \times (-x_i +\frac{1}{N} \summingtwo x_j) \\
+ &=& 2\summing (-y_i x_i + \alpha {x_i}^2 + \frac{x_i}{N}\summingtwo y_i - \frac{\alpha}{N} x_i \summingtwo x_j) + \summing(y_i \frac{1}{N} \summingtwo x_j - \frac {1}{N^2}\summingtwo y_j \summingtwo x_j + \frac {\alpha}{N^2}(\summingtwo x_j)^2)
+ \end{eqnarray*}
+
+But this last expression is zero whenever
+
+\begin{eqnarray*}
+\alpha(\summing {x_i}^2 - \frac{1}{N}(\summing x_i)^2 - \frac{1}{N}(\summing x_i)^2 + \frac {N}{N^2}(\summing x_i)^2 )  \\
+= \summing y_i x_i - \frac{1}{N} \summing x_i \summing y_i - \frac {1}{N} \summing y_i \summing x_i + \frac{N}{N^2}\summing y_i \summing x_i
+\end{eqnarray*}
+
+And this is the result we wanted:-
+
+\begin{equation}
+\alpha = \frac{N\summing x_i y_i - \summing x_i \summing y_i}{N \summing x_i^2 - (\summing x_i)^2}
+\end{equation}
+
+
+
+% section exercise_1_whitening_filters_ (end)
+
+
+
+
+\section{Exercise 2 (LMSE and Maximum Likelihood)} % (fold)
+\label{sg:sec:ex2}
+
+All data-points $y_1 \cdots y_i$ are a assumed to be gaussian distributed
+around the true model $f(\vec{x}, \vec{\alpha})$. The standard distributions $\sigma$ are the same
+for all all data points. The joint density for all data-points is then:
+\begin{equation}
+	\prod_{i=1}^{N} \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-{{(y_i - \mu)}^2}\over{2 \sigma^2}}
+\end{equation}
+with $\mu$ being equal to the value of the true model $f(\vec{x}, \vec{\alpha})$.
+The negative log-likelihood of the model is
+\begin{equation}
+	L(\vec{\alpha}, \vec{x}) = 
+		\sum_{i=1}^{N} ln(\frac{1}{\sqrt{2 \pi \sigma^2}} e^{-{{(y_i - \mu)}^2}\over{2 \sigma^2}})
+\end{equation}
+which we then want to maximize.
+\begin{equation}
+	\begin{aligned}
+		\max_{\vec{\alpha}} \, L(\vec{\alpha}, \vec{x}) 
+		&= 
+			\sum_{i=1}^{N} 
+				ln(\frac{1}{\sqrt{2 \pi \sigma^2}} 
+				e^{-{{(y_i - f(\vec{x}, \vec{\alpha}))}^2}\over{2 \sigma^2}}) \\
+		&= 
+			-n \, ln(\frac{1}{\sqrt{2 \pi \sigma^2}}) - 
+			\sum_{i=1}^{N} ln(e^{-{{(y_i - f(\vec{x}, \vec{\alpha}))}^2}\over{2 \sigma^2}}) \\
+		&= 
+			\underbrace{-\frac{n}{2 \sigma^2}ln(\frac{1}{\sqrt{2 \pi \sigma^2}})}_{constant} + 
+			\sum_{i=1}^{N} {(y_i - f(\vec{x}, \vec{\alpha}))}^2
+	\end{aligned}
+\end{equation}
+Because we can neglect the constant term, only the last part has to be maximized 
+which is the same as the LMSE.
+\begin{equation}
+	\sum_{i=1}^{N} {(y_i - f(\vec{x}, \vec{\alpha}))}^2
+\end{equation}
+
+I think that for both behavioral and psychophysical experiments assuming $\sigma$
+to be constant for all $\vec{x}$ might not be the best assumption. For example
+could the std of a effect increase with time because the subjects get tired. 
+
+% section ex2 (end)
+
+
+
+\section{Exercise 3 (Maximum Likelihood and Binomial Data)} % (fold)
+\label{sg:sec:exercise_3_gain_control}
+
+The binomial distribution has the form $Pr(K=k) = {{N} \choose {k}}p^k (1-p)^{N-k}$. Here we set $N$ to the no. of trials, $K$ to the number of successes on the part of the observer.
+and $p$ to the actual probability of detection. Then our likelihood function is ${{N} \choose {k}}\tilde{p}^k (1-\tilde{p})^{N-k}$. Differentiating this w.r.t $\tilde{p}$ gives:-
+${{N} \choose {k}}k\tilde{p}^{k-1} (1-\tilde{p})^{N-k} - {{N} \choose {k}}(N-k)\tilde{p}^k (1-\tilde{p})^{N-k-1}$. This is zero if and only if:- 
+
+\begin{equation} 
+k\tilde{p}^{k-1} (1-\tilde{p})^{N-k} = (N-k)\tilde{p}^k (1-\tilde{p})^{N-k-1}
+\end{equation}
+
+\begin{equation}
+k (1-\tilde{p}) = (N-k)\tilde{p}
+\end{equation}
+
+\begin{equation}
+k = N\tilde{p}
+\end{equation}
+
+\begin{equation}
+\tilde{p} = \frac{k}{N}
+\end{equation}
+
+Now try the log likelihood, which is given by:-  $log({{N} \choose {k}})+log(\tilde{p}^k)+log( (1-\tilde{p})^{N-k})$.
+Differentiating this w.r.t. $\tilde{p}$ and setting to zero gives:-
+
+\begin{equation}
+\frac{k\tilde{p}^{k-1}}{(\tilde{p}^k)}   =   \frac{(N-k)(1-\tilde{p})^{N-k-1}}{ (1-\tilde{p})^{N-k}} 
+\end{equation}
+
+This clearly gives the same result as before.
+
+
+
+% section exercise_3_gain_control (end)
+
+
+
+\end{document}

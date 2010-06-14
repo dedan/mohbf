@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+import numpy as np
 
-adaptive_data = [
+adaptive_data = np.array([
     [ 10, 3 , 3 ],
     [ 9 , 3 , 3 ],
     [ 8 , 3 , 3 ],
@@ -41,14 +41,14 @@ adaptive_data = [
     [ 5 , 3 , 3 ],
     [ 4 , 0 , 1 ],
     [ 5 , 3 , 3 ]
-]
+])
 
-blocked_data = [
+blocked_data = np.array([
     [ 3 ,  9 , 19 ],
     [ 4 , 10 , 19 ],
     [ 5 , 14 , 19 ],
     [ 6 , 17 , 19 ],
     [ 7 , 18 , 18 ]
-]
+])
 
 

@@ -8,7 +8,7 @@ patch_size  = 16
 n_patches   = 2
 plt.rcParams['image.interpolation'] = 'nearest'
 
-"""Loads a rando image from database, extracts and nomalizes a random patch of it
+"""Loads a random image from database, extracts and nomalizes a random patch of it
 and plots both."""
 
 # load random image
